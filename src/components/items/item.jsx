@@ -1,26 +1,64 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { FaHeart } from "react-icons/fa";
+import { motion, useInView } from "framer-motion"; // Import Framer Motion for animations
 
-const Item = ({ id, img, name, new_price, old_price }) => {
+const Item = ({ id, img, name, new_price, old_price, index }) => {
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true }); // Animates only once per scroll
+
+  const handleWishlistClick = (e) => {
+    e.stopPropagation();
+    setIsWishlisted(!isWishlisted);
+  };
+
   return (
-    <div className="transform transition-transform hover:scale-105 duration-500 lg:w-64 lg:h-72">
-      <Link to={`/product/${id}`}>
-        <img
-         loading=" lazy"
-          onClick={() => window.scrollTo(0, 0)}
-          className=" object-cover mb-4"
-          src={img}
-          alt={name}
+    <motion.div
+      ref={ref}
+      className="relative bg-gradient-to-b from-[#f8f9fa] to-white rounded-2xl shadow-lg overflow-hidden p-4"
+      initial={{ opacity: 0, scale: 0.8, y: 50 }} // Start hidden & slightly lower
+      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : {}} // Animate when in view
+      transition={{ duration: 0.6, delay: index * 0.2, ease: "easeOut" }} // Staggered effect
+    >
+      {/* Discount Badge */}
+      <div className="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-md">
+        50% OFF
+      </div>
+
+      {/* Wishlist Icon */}
+      <div
+        className="absolute top-3 lg:right-3 right-1 bg-white p-1 rounded-full shadow-md cursor-pointer hover:bg-red-100"
+        onClick={handleWishlistClick}
+      >
+        <FaHeart
+          className={`transition duration-300 text-lg ${
+            isWishlisted ? "text-red-500" : "text-gray-600 hover:text-red-500"
+          }`}
         />
-      </Link>
-      <p className="text-gray-800 text-lg font-semibold">{name}</p>
-   
-        <div className="text-green-600 font-bold">${new_price}</div>
-        <div className="text-gray-400 line-through">
-          ${old_price}
+      </div>
+
+      <Link to={`/product/${id}`}>
+        <div className="relative top-7 overflow-hidden rounded-lg">
+          <img
+            loading="lazy"
+            onClick={() => window.scrollTo(0, 0)}
+            className="w-full md:h-68 h-36 bg-cover rounded-lg transition-transform duration-300 hover:scale-110"
+            src={img}
+            alt={name}
+          />
         </div>
-  
-    </div>
+      </Link>
+
+      {/* Product Name */}
+      <p className="mt-10 text-gray-900 font-bold text-2xl">{name}</p>
+
+      {/* Price Section */}
+      <div className="flex items-center justify-between mt-2">
+        <div className="text-green-600 font-bold text-xl">${new_price}</div>
+        <div className="text-gray-400 line-through text-sm">${old_price}</div>
+      </div>
+    </motion.div>
   );
 };
 

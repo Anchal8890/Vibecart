@@ -5,6 +5,7 @@ import Offer from "../components/offers/offer";
 import NewCollection from "../components/newCollection/newcollection";
 import Newsletter from "../components/newsletter/newsletter";
 import Navbar from "../components/Navbar/Navbar";
+import transition from "../components/PageTransition/Index";
 
 function Shop() {
   return (
@@ -19,4 +20,4 @@ function Shop() {
   );
 }
 
-export default Shop;
+export default transition(Shop);

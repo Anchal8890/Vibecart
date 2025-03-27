@@ -46,7 +46,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center gap-12 text-2xl font-semibold">
+        <ul onClick={() => window.scrollTo(0, 0)} className="hidden md:flex items-center gap-12 text-2xl font-semibold">
           <li className={`${menu === "Home" ? "border-b-2 border-blue-500" : ""}`}>
             <Link to="/" className="text-gray-600 hover:text-gray-800">
               Home

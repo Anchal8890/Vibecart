@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { FaUserEdit } from "react-icons/fa";
+import transition from "./PageTransition/Index";
 
-export default function ProfilePage() {
+ function ProfilePage () {
   const [isEditing, setIsEditing] = useState(false);
   const [user, setUser] = useState({
     name: "Salman Khan",
@@ -60,3 +61,4 @@ export default function ProfilePage() {
     </div>
   );
 }
+export default transition(ProfilePage) 

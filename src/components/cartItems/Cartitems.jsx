@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../../context/ShopContext";
+import { Link } from "react-router-dom";
 
 const Cartitems = () => {
   const { all_product, cartItems, removeFromCart, getTotalCartAmount } =
@@ -38,7 +39,7 @@ const Cartitems = () => {
                   onClick={() => removeFromCart(product.id)}
                   alt="Remove"
                 /> */}
-                <span className=" cursor-pointer">x</span>
+                <span onClick={() => removeFromCart(product.id)} className=" cursor-pointer">x</span>
               </div>
               <hr className="my-4 h-[2px] bg-gray-200" />
             </div>
@@ -68,9 +69,10 @@ const Cartitems = () => {
               <h3>Rs. {getTotalCartAmount()}</h3>
             </div>
           </div>
+          <Link to= "/proceedtopay">
           <button className="w-60 h-14 mt-6 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600">
             PROCEED TO CHECKOUT
-          </button>
+          </button> </Link>
         </div>
 
         {/* Promo Code */}
