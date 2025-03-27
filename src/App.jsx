@@ -16,6 +16,7 @@ import Profile from "./components/Profile";
 import ShopContextProvider from "./context/ShopContext";
 import Card from "./components/Card";
 import { AnimatePresence } from "framer-motion";
+import ProceedToPay from "./components/ProceedToPay/ProceedToPay";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
           <Route path="/login" element={<LoginSignup />} />
           <Route path="/card" element={<Card />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/proceedtopay" element={<ProceedToPay />} /> 
         </Routes>
         <Footer />
         </AnimatePresence>
