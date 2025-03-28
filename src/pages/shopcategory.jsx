@@ -74,6 +74,7 @@ const ShopCategory = (props) => {
         src={props.banner}
         alt=""
       />
+      
      </div>
       <div className="flex justify-center items-center mx-auto my-5 ">
         <p className="text-lg">
