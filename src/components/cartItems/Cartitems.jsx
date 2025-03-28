@@ -69,10 +69,14 @@ const Cartitems = () => {
               <h3>Rs. {getTotalCartAmount()}</h3>
             </div>
           </div>
-          <Link to= "/proceedtopay">
-          <button className="w-60 h-14 mt-6 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600">
-            PROCEED TO CHECKOUT
-          </button> </Link>
+          <Link to="/proceedtopay">
+  <button 
+    onClick={() => window.scrollTo(0, 0)} 
+    className="w-60 h-14 mt-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold text-md uppercase tracking-wider rounded-lg shadow-lg hover:from-indigo-500 hover:to-blue-700 hover:scale-105 transform transition-all duration-300"
+  >
+    🚀 Proceed to Checkout
+  </button>
+</Link>
         </div>
 
         {/* Promo Code */}

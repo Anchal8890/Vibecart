@@ -12,7 +12,7 @@ const Descriptionbox = () => {
         <div
           className={`flex items-center justify-center text-sm lg:text-base font-semibold w-36 h-14 lg:w-40 lg:h-16 border-b-2 border-gray-300 ${
             activeTab === "description"
-              ? "border-b-2 border-blue-500 text-blue-600"
+              ? "border-b-2 border-blue-500 text-blue-600 bg-gray-100"
               : "text-gray-600 hover:text-blue-500"
           }`}
           onClick={() => setActiveTab("description")}
@@ -20,10 +20,10 @@ const Descriptionbox = () => {
           Description
         </div>
         <div
-          className={`flex items-center justify-center text-sm lg:text-base font-semibold w-36 h-14 lg:w-40 lg:h-16 bg-gray-100 text-gray-600 ${
+          className={`flex items-center justify-center text-sm lg:text-base font-semibold w-36 h-14 lg:w-40 lg:h-16  text-gray-600 ${
             activeTab === "reviews"
-              ? "border-b-2 border-blue-500 text-blue-600"
-              : "text-gray-600 hover:text-blue-500"
+              ? "border-b-2 border-blue-500 text-blue-600 bg-gray-100"
+              : "text-gray-600 hover:text-blue-500 "
           }`}
           onClick={() => setActiveTab("reviews")}
         >
@@ -32,7 +32,7 @@ const Descriptionbox = () => {
       </div>
 
       {/* Tab Content */}
-      <div className="border border-gray-300 p-6 text-sm lg:text-base bg-gray-50 mt-2 shadow-lg rounded-lg transition-all duration-300">
+      <div className="border border-gray-300 p-6 text-sm lg:text-base mt-2 shadow-lg rounded-lg transition-all duration-300">
         {activeTab === "description" ? (
           <div className="space-y-3">
             <p>
