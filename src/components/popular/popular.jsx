@@ -1,17 +1,32 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import data_product from "../../../public/Assets/data.js";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { motion, useInView } from "framer-motion"; // Import Framer Motion for animations
 
-function PopularItem({ id, name, image, newPrice, oldPrice, index }) {
+function PopularItem({ id, img, name, new_price, old_price, index }) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true }); // Animates only once per scroll
+ // ✅ Check if this item is already in localStorage on component mount
+  useEffect(() => {
+    const wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+    setIsWishlisted(wishlistItems.some((item) => item.id === id));
+  }, [id]); // Runs only when `id` changes
 
   const handleWishlistClick = (e) => {
     e.stopPropagation();
     setIsWishlisted(!isWishlisted);
+  
+    let wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+  
+    if (!isWishlisted) {
+      wishlistItems.push({ id, img, name, new_price, old_price });
+    } else {
+      wishlistItems = wishlistItems.filter((item) => item.id !== id);
+    }
+  
+    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
   };
 
   return (
@@ -45,7 +60,7 @@ function PopularItem({ id, name, image, newPrice, oldPrice, index }) {
             loading="lazy"
             onClick={() => window.scrollTo(0, 0)}
             className="w-full md:h-68 h-36 bg-cover rounded-lg transition-transform duration-300 hover:scale-110"
-            src={image}
+            src={img}
             alt={name}
           />
         </div>
@@ -56,8 +71,8 @@ function PopularItem({ id, name, image, newPrice, oldPrice, index }) {
 
       {/* Price Section */}
       <div className="flex items-center justify-between mt-2">
-        <div className="text-green-600 font-bold text-xl">${newPrice}</div>
-        <div className="text-gray-400 line-through text-sm">${oldPrice}</div>
+        <div className="text-green-600 font-bold text-xl">${new_price}</div>
+        <div className="text-gray-400 line-through text-sm">${old_price}</div>
       </div>
     </motion.div>
   );
@@ -86,9 +101,9 @@ function Popular() {
             key={item.id}
             id={item.id}
             name={item.name}
-            image={item.image}
-            newPrice={item.new_price}
-            oldPrice={item.old_price}
+            img={item.img}
+            new_price={item.new_price}
+            old_price={item.old_price}
             index={index} // Pass index for staggered effect
           />
         ))}

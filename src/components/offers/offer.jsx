@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Offer = () => {
   return (
-    <div className="relative w-full lg:w-3/4 lg:h-auto h-3/4 flex flex-col lg:flex-row justify-center mx-auto lg:mt-50 p-10 lg:p-20 bg-gradient-to-b from-[#caedff] to-[#e1ffea22]">
+    <div className="relative w-full lg:w-3/4 lg:h-auto h-3/4 flex flex-col lg:flex-row justify-center mx-auto lg:mt-50 p-10 lg:p-20 bg-gradient-to-b from-[#caedff] to-[#e1ffea22] rounded-xl">
       {/* Left Side - Text Content */}
       <motion.div
         className="flex-1 text-center lg:text-left"

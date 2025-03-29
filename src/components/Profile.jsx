@@ -11,7 +11,7 @@ import transition from "./PageTransition/Index";
   });
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-200 to-blue-500">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-[#72bcf8] to-[#e1ffea22] ">
       <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-2xl transform transition-all duration-500 hover:scale-105">
         <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Profile</h2>
         {isEditing ? (

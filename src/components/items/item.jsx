@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 import { motion, useInView } from "framer-motion"; // Import Framer Motion for animations
@@ -8,11 +8,27 @@ const Item = ({ id, img, name, new_price, old_price, index }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true }); // Animates only once per scroll
 
+  // ✅ Check if this item is already in localStorage on component mount
+  useEffect(() => {
+    const wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+    setIsWishlisted(wishlistItems.some((item) => item.id === id));
+  }, [id]); // Runs only when `id` changes
+
   const handleWishlistClick = (e) => {
     e.stopPropagation();
     setIsWishlisted(!isWishlisted);
+  
+    let wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+  
+    if (!isWishlisted) {
+      wishlistItems.push({ id, img, name, new_price, old_price });
+    } else {
+      wishlistItems = wishlistItems.filter((item) => item.id !== id);
+    }
+  
+    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
   };
-
+  
   return (
     <motion.div
       ref={ref}

@@ -1,74 +1,120 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaGooglePay, FaCreditCard, FaUniversity } from "react-icons/fa";
+import { FaCreditCard, FaUniversity } from "react-icons/fa";
 import Lottie from "lottie-react";
-import paymentMethod from "../../assets/payment-method.json";
+// import paymentMethod from "../../assets/payment-method.json";
 import paymentSuccess from "../../assets/payment-success.json";
 import { ShopContext } from "../../context/ShopContext";
+import StepIndicator from "./StepIndicator";
 
 const ProceedToPay = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { all_product, cartItems, removeFromCart, getTotalCartAmount } =
-  useContext(ShopContext);
+  const { cartItems, getTotalCartAmount } = useContext(ShopContext);
 
   return (
-    <div className="flex flex-col items-center justify-center h-auto bg-gradient-to-r from-blue-600 to-purple-600 px-6 font-poppins">
+    <>
+  
+    <div className="flex flex-col items-center justify-center h-auto bg-white px-6 py-22 font-poppins">
+    <StepIndicator />
       {/* Payment Container */}
-      <div className="bg-white bg-opacity-10 mt-20 mb-5 backdrop-blur-lg p-2 rounded-xl shadow-lg w-full h-auto max-w-lg border border-white border-opacity-20">
-        <div>
-        <h2 className="text-3xl font-extrabold text-gray-700 text-center drop-shadow-lg">
-          💳 Secure Payment
-        </h2>
+      <div className="bg-white mt-10 mb-5 p-5 rounded-xl shadow-lg w-full max-w-5xl border border-gray-300">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left: Payment Form */}
+          <div className="bg-white p-5 rounded-lg shadow-md">
+            <h2 className="text-2xl font-extrabold text-gray-700 mb-5">Checkout</h2>
+            <h3 className="text-lg font-bold mb-3">Card Type</h3>
+            <div className="flex space-x-4 mb-5">
+              <label className="flex items-center p-3 border rounded-lg cursor-pointer bg-gray-100">
+                <input type="radio" name="cardType" className="mr-2" />
+                <FaCreditCard className="text-lg text-blue-600 mr-2" />
+                Credit Card
+              </label>
+              <label className="flex items-center p-3 border rounded-lg cursor-pointer bg-gray-100">
+                <input type="radio" name="cardType" className="mr-2" />
+                <FaUniversity className="text-lg text-green-600 mr-2" />
+                Debit Card
+              </label>
+            </div>
 
-        {/* Lottie Animation */}
-        <Lottie animationData={paymentMethod} className="w-32 mx-auto" />
+            {/* Card Details Form */}
+            <div>
+              <label className="block font-bold text-gray-700">Name On Card</label>
+              <input
+                type="text"
+                placeholder="Cardholder Name"
+                className="w-full p-2 mt-1 mb-4 border border-gray-300 rounded-md"
+              />
+              <label className="block font-bold text-gray-700">Card Number</label>
+              <input
+                type="text"
+                placeholder="xxxx-xxxx-xxxx-xxxx"
+                className="w-full p-2 mt-1 mb-4 border border-gray-300 rounded-md"
+              />
+              <div className="flex space-x-4">
+                <div className="w-1/2">
+                  <label className="block font-bold text-gray-700">Valid On</label>
+                  <input
+                    type="text"
+                    placeholder="MM/YY"
+                    className="w-full p-2 mt-1 mb-4 border border-gray-300 rounded-md"
+                  />
+                </div>
+                <div className="w-1/2">
+                  <label className="block font-bold text-gray-700">CVV</label>
+                  <input
+                    type="text"
+                    placeholder="***"
+                    className="w-full p-2 mt-1 mb-4 border border-gray-300 rounded-md"
+                  />
+                </div>
+              </div>
+              <div className="flex items-center mb-4">
+                <input type="checkbox" className="mr-2" />
+                <span className="text-gray-600">Securely save this card for faster checkout next time</span>
+              </div>
+            </div>
 
-        {/* Order Summary */}
-        <div className="bg-gray bg-opacity-20 p-1 rounded-lg shadow-md">
-          <p className="text-lg font-semibold text-black pb-2">🛒 Order Summary</p>
-          <p className="text-gray-700">Subtotal: <span className="font-bold text-gray-700">Rs.{getTotalCartAmount()}</span></p>
-          <p className="text-gray-700">Shipping Fee: <span className="text-green-400">Free</span></p>
-          <hr className="my-2 border-gray-400" />
-          <p className="text-xl font-bold text-gray-700">Total: Rs. {getTotalCartAmount()}</p>
-        </div>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="w-full mt-3 bg-green-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:bg-green-700 transition"
+            >
+              Pay Rs. {getTotalCartAmount()}
+            </button>
+          </div>
 
-        {/* Payment Methods */}
-        <div className="space-y-1">
-          <label className="flex items-center bg-white bg-opacity-20 p-1 rounded-lg cursor-pointer hover:bg-opacity-30 transition">
-            <FaGooglePay className="text-2xl text-blue-400" />
-            <input type="radio" name="payment" className="ml-3 form-radio text-blue-500" />
-            <span className="ml-3 text-gray-700">UPI (Google Pay, PhonePe, Paytm)</span>
-          </label>
+          {/* Right: Order Summary */}
+          <div className="bg-gray-100 p-5 rounded-lg shadow-md">
+            <h2 className="text-2xl font-extrabold text-gray-700 mb-5">Order Summary</h2>
+            <div className="space-y-3">
+              <div className="flex justify-between">
+                <span className="text-gray-700">Subtotal</span>
+                <span className="font-bold text-gray-700">Rs. {getTotalCartAmount()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-700">Shipping Fee</span>
+                <span className="text-green-500">Free</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-700">Discount</span>
+                <span className="text-red-500">- Rs. 0</span>
+              </div>
+              <hr className="my-2 border-gray-400" />
+              <div className="flex justify-between">
+                <span className="text-xl font-bold text-gray-700">Total</span>
+                <span className="text-xl font-bold text-gray-700">Rs. {getTotalCartAmount()}</span>
+              </div>
+            </div>
 
-          <label className="flex items-center bg-white bg-opacity-20 p-1 rounded-lg cursor-pointer hover:bg-opacity-30 transition">
-            <FaCreditCard className="text-2xl text-yellow-400" />
-            <input type="radio" name="payment" className="ml-3 form-radio text-blue-500" />
-            <span className="ml-3 text-gray-700">Debit / Credit Card</span>
-          </label>
-
-          <label className="flex items-center bg-white bg-opacity-20 p-1 rounded-lg cursor-pointer hover:bg-opacity-30 transition">
-            <FaUniversity className="text-2xl text-green-400" />
-            <input type="radio" name="payment" className="ml-3 form-radio text-blue-500" />
-            <span className="ml-3 text-gray-700">Net Banking</span>
-          </label>
-        </div>
-
-        {/* Confirm & Pay Button */}
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="w-full mt-3 bg-blue-600 text-white font-semibold py-3 rounded-lg shadow-lg hover:bg-green-600 transition-all transform hover:scale-105"
-        >
-          Confirm & Pay 💸
-        </button>
-
-        {/* Back Button */}
-        <button
-          onClick={() => navigate(-1)}
-          className="w-full mt-3 text-gray-300 font-semibold hover:text-white transition"
-        >
-          ⬅️ Go Back
-        </button>
+            <div className="mt-5 text-right">
+              <button
+                onClick={() => navigate(-1)}
+                className="text-blue-500 hover:underline"
+              >
+                Change Shipping Details
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -93,6 +139,7 @@ const ProceedToPay = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

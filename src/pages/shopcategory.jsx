@@ -70,7 +70,7 @@ const ShopCategory = (props) => {
       <div className="">
       <img
         loading=" lazy"
-        className="block mx-auto mt-18 mb-10 "
+        className="block mx-auto mt-20 mb-10 rounded-xl "
         src={props.banner}
         alt=""
       />
@@ -106,14 +106,14 @@ const ShopCategory = (props) => {
       </motion.div>
 
       <motion.div
-        className="fixed top-0 left-0 w-full h-screen bg-blue-300 bg-opacity-50 transform origin-bottom"
-        initial={{ scaleY: 0 }}
+        className="fixed top-0 left-0 w-full h-screen bg-blue-300 bg-opacity-50 transform origin-bottom z-50"
+        initial={{ scaleY: 1 }}
         animate={{ scaleY: 0 }}
         exit={{ scaleY: 1 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       />
       <motion.div
-        className="fixed top-0 left-0 w-full h-screen bg-blue-300 bg-opacity-50 transform origin-top"
+        className="fixed top-0 left-0 w-full h-screen bg-blue-300 bg-opacity-50 transform origin-top z-50"
         initial={{ scaleY: 1 }}
         animate={{ scaleY: 0 }}
         exit={{ scaleY: 1 }}

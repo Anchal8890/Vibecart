@@ -24,14 +24,39 @@ const Productdisplay = ({ product }) => {
         <span className="capitalize text-gray-800">{product.category}</span>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-10 items-start">
+      <div className="flex flex-col lg:flex-row gap-4 items-center w-full">
         {/* Product Images */}
-        <div className="flex gap-4">
-          <div className="flex flex-col gap-3">
+         <div className="flex flex-col lg:hidden gap-4 items-center w-full"> 
+          {/* Main Image */}
+           <motion.img
+            className="w-80 lg:w-96 h-80 rounded-xl shadow-md object-cover"
+            src={product.image}
+            alt="Main Product"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
+          /> 
+
+          {/* Thumbnails (Mobile: Below, Desktop: Side) */}
+           <div className="flex lg:flex-col gap-3 lg:ml-4 mt-4 lg:mt-0">
             {[...Array(4)].map((_, index) => (
               <motion.img
                 key={index}
                 className="h-20 lg:h-24 cursor-pointer rounded-lg shadow-sm hover:shadow-md transition"
+                src={product.image}
+                alt="Thumbnail"
+                whileHover={{ scale: 1.1 }}
+              />
+            ))}
+          </div>
+        </div> 
+          {/* Product Images */}
+          <div className="md:flex hidden gap-4">
+          <div className="flex flex-col gap-3">
+            {[...Array(4)].map((_, index) => (
+              <motion.img
+                key={index}
+                className="h-20 lg:h-21 cursor-pointer rounded-lg shadow-sm hover:shadow-md transition"
                 src={product.image}
                 alt="Thumbnail"
                 whileHover={{ scale: 1.1 }}
@@ -48,6 +73,8 @@ const Productdisplay = ({ product }) => {
           />
         </div>
 
+
+
         {/* Product Details */}
         <div className="flex flex-col gap-4 w-full lg:w-1/2">
           <h1 className="text-gray-900 text-2xl font-bold">{product.name}</h1>
@@ -56,7 +83,12 @@ const Productdisplay = ({ product }) => {
             <span>★★★★☆</span>
             <span className="text-gray-600 text-sm">(125 Reviews)</span>
           </div>
-
+         <div>
+          <p className="text-gray-600 text-sm">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+             A doloremque reiciendis quisquam iste consequuntur, accusantium  ipsam alias eligendi esse
+            iusto molestiae quidem explicabo similique, cumque doloribus deleniti necessitatibus dolorem dicta?
+           </p>
+         </div>
           <div className="flex items-center gap-4 text-2xl font-bold">
             <span className="text-gray-400 line-through">${product.old_price}</span>
             <span className="text-red-500">${product.new_price}</span>

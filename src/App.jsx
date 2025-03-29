@@ -17,7 +17,8 @@ import ShopContextProvider from "./context/ShopContext";
 import Card from "./components/Card";
 import { AnimatePresence } from "framer-motion";
 import ProceedToPay from "./components/ProceedToPay/ProceedToPay";
-
+import Wishlist from "./components/Wishlist/Wishlist";
+import Shipping from "./components/ProceedToPay/Shipping";
 
 function App() {
   return (
@@ -48,6 +49,8 @@ function App() {
           <Route path="/card" element={<Card />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/proceedtopay" element={<ProceedToPay />} /> 
+          <Route path="/shipping" element={<Shipping />} />
+         <Route path="/wishlist" element={<Wishlist />} />
         </Routes>
         <Footer />
         </AnimatePresence>
@@ -62,3 +65,4 @@ function App() {
 }
 
 export default App;
+  

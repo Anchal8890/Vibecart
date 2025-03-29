@@ -1,12 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ShopContext } from "../../context/ShopContext";
 import { FiMenu, FiHome, FiShoppingCart, FiUser, FiSmile } from "react-icons/fi";
 import { MdClose } from "react-icons/md";
+import { auth } from "../../Firebase/firebaseConfig" // Firebase Auth import
+import { onAuthStateChanged } from "firebase/auth";
 
 const BottomNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // For toggling the throw-up menu
   const { getTotalCartItems } = useContext(ShopContext);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe(); // Cleanup function
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen); // Toggle the throw-up menu
@@ -22,7 +33,7 @@ const BottomNavbar = () => {
         style={{ height: "150px" }} // Adjust the height of the throw-up menu
       >
         {isMenuOpen && (
-          <ul  onClick={() => window.scrollTo(0, 0)} className="flex flex-col justify-center items-start h-full">
+          <ul onClick={() => window.scrollTo(0, 0)} className="flex flex-col justify-center items-start h-full">
             {[
               { category: "mens", icon: <FiUser color="#00c9ff" size={24} /> },
               { category: "womens", icon: <FiUser color="#ed20ff" size={24} /> }, // You can adjust or choose a more feminine icon if desired
@@ -71,11 +82,22 @@ const BottomNavbar = () => {
           </li>
 
           {/* Profile Button */}
-          <li onClick={() => window.scrollTo(0, 0)} className="flex flex-col items-center">
-            <Link to="/profile" className="flex flex-col items-center">
-              <FiUser size={24} />
+          <li className="flex flex-col items-center">
+            {user && user.photoURL ? (
+              <>
+              <img
+                src={user.photoURL}
+                alt="User"
+                className="w-7 h-7 rounded-full cursor-pointer"
+              />
               <span className="text-xs">Profile</span>
-            </Link>
+              </>
+            ) : (
+              <Link to="/profile" className="flex flex-col items-center">
+                <FiUser size={24} />
+                <span className="text-xs">Profile</span>
+              </Link>
+            )}
           </li>
         </ul>
       </nav>

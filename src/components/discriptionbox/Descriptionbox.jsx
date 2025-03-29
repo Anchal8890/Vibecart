@@ -1,13 +1,12 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion"; // Import motion from Framer Motion
 
 const Descriptionbox = () => {
   const [activeTab, setActiveTab] = useState("description");
 
-
-
   return (
     <div className="mx-4 lg:mx-36 my-10 font-poppins">
-     
+      {/* Tab Header */}
       <div className="flex border-b border-gray-300 relative">
         <div
           className={`flex items-center justify-center text-sm lg:text-base font-semibold w-36 h-14 lg:w-40 lg:h-16 border-b-2 border-gray-300 ${
@@ -20,10 +19,10 @@ const Descriptionbox = () => {
           Description
         </div>
         <div
-          className={`flex items-center justify-center text-sm lg:text-base font-semibold w-36 h-14 lg:w-40 lg:h-16  text-gray-600 ${
+          className={`flex items-center justify-center text-sm lg:text-base font-semibold w-36 h-14 lg:w-40 lg:h-16 text-gray-600 ${
             activeTab === "reviews"
               ? "border-b-2 border-blue-500 text-blue-600 bg-gray-100"
-              : "text-gray-600 hover:text-blue-500 "
+              : "text-gray-600 hover:text-blue-500"
           }`}
           onClick={() => setActiveTab("reviews")}
         >
@@ -31,8 +30,14 @@ const Descriptionbox = () => {
         </div>
       </div>
 
-      {/* Tab Content */}
-      <div className="border border-gray-300 p-6 text-sm lg:text-base mt-2 shadow-lg rounded-lg transition-all duration-300">
+      {/* Tab Content with Animation */}
+      <motion.div
+        key={activeTab} // Ensure animation runs when the tab changes
+        initial={{ opacity: 0, y: 10 }} // Start faded out & slightly lower
+        animate={{ opacity: 1, y: 0 }} // Fade in & move up
+        transition={{ duration: 0.5 }} // Smooth transition
+        className="border border-gray-300 p-6 text-sm lg:text-base mt-2 shadow-lg rounded-lg"
+      >
         {activeTab === "description" ? (
           <div className="space-y-3">
             <p>
@@ -55,21 +60,15 @@ const Descriptionbox = () => {
         ) : (
           <div className="space-y-3">
             <h3 className="text-lg font-semibold text-gray-700">Customer Reviews</h3>
-            <p className="text-gray-600">
-              ★★★★★ - "Amazing product! Highly recommend."
-            </p>
-            <p className="text-gray-600">
-              ★★★★☆ - "Good quality but delivery was a bit slow."
-            </p>
-            <p className="text-gray-600">
-              ★★★★☆ - "Decent for the price. Would buy again."
-            </p>
+            <p className="text-gray-600">★★★★★ - "Amazing product! Highly recommend."</p>
+            <p className="text-gray-600">★★★★☆ - "Good quality but delivery was a bit slow."</p>
+            <p className="text-gray-600">★★★★☆ - "Decent for the price. Would buy again."</p>
             <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition">
               Write a Review
             </button>
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };
